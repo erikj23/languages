@@ -1,0 +1,40 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 5/1/2018 8:43:05 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  
+00000000  =00008000                  8  addr    equ     $8000
+00000000                             9  
+00001000                            10  start   org     $1000
+00001000                            11  
+00001000  47F9 00008000             12          lea     addr,a3
+00001006  373C BCDF                 13          move.w  #$bcdf,-(a3)
+0000100A  273C 00009856             14          move.l  #$9856,-(a3)
+00001010  3C4B                      15          movea.w a3,a6
+00001012  3A7C 5C7A                 16          movea.w #$5c7a,a5
+00001016  3A0D                      17          move.w  a5,d5
+00001018  3E3C 0011                 18          move.w  #$11,d7
+0000101C  EFBD                      19          rol.l   d7,d5
+0000101E  321B                      20          move.w  (a3)+,d1
+00001020  2E1B                      21          move.l  (a3)+,d7
+00001022  BF45                      22          eor.w   d7,d5
+00001024  3705                      23          move.w  d5,-(a3)
+00001026  301B                      24          move.w  (a3)+,d0
+00001028                            25  
+00001028                            26          end     start    
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADDR                8000
+START               1000

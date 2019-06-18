@@ -1,0 +1,93 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/12/2018 6:17:52 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  
+00000000                             8  *-----------equates-----------------;comments-------------------
+00000000  =0000A000                  9  stack       equ     $a000               
+00000000  =0000DE61                 10  example     equ     %1101111001100001
+00000000  =0000000C                 11  shift       equ     12              ;shift 12 bits
+00000000                            12  
+00000000                            13  *-----------program
+00001000                            14              ORG     $1000
+00001000  4FF9 0000A000             15  START:      lea     stack,sp        ;load the stack pointer
+00001006  41F9 00001020             16              lea     jmp_table,a0    ;index into table
+0000100C  4280                      17              clr.l   d0              ;zero it
+0000100E  303C DE61                 18              move.w  #example,d0     ;we will play here
+00001012  123C 000C                 19              move.b  #shift,d1       ;shift 12 bits to the right
+00001016  E268                      20              lsr.w   d1,d0           ;move the bits
+00001018                            21              *why do we multiply the next index by 6?
+00001018  C0FC 0006                 22              mulu    #6,d0           ;form offset
+0000101C  4EB0 0000                 23              jsr     0(a0,d0)        ;jump indirect with index
+00001020                            24          
+00001020  4EF9 0000107A             25  jmp_table   jmp     code0000
+00001026  4EF9 0000107E             26              jmp     code0001
+0000102C  4EF9 00001086             27              jmp     code0011
+00001032  4EF9 0000108A             28              jmp     code0100
+00001038  4EF9 0000108E             29              jmp     code0101
+0000103E  4EF9 00001092             30              jmp     code0110
+00001044  4EF9 00001096             31              jmp     code0111
+0000104A  4EF9 0000109A             32              jmp     code1000
+00001050  4EF9 0000109E             33              jmp     code1001
+00001056  4EF9 000010A2             34              jmp     code1010
+0000105C  4EF9 000010A6             35              jmp     code1011
+00001062  4EF9 000010AA             36              jmp     code1100
+00001068  4EF9 000010AE             37              jmp     code1101
+0000106E  4EF9 000010B2             38              jmp     code1110
+00001074  4EF9 000010B6             39              jmp     code1111
+0000107A                            40  
+0000107A                            41  *-------variables
+0000107A  4E72 2700                 42  code0000    stop    #$2700
+0000107E  4E72 2700                 43  code0001    stop    #$2700
+00001082  4E72 2700                 44  code0010    stop    #$2700
+00001086  4E72 2700                 45  code0011    stop    #$2700
+0000108A  4E72 2700                 46  code0100    stop    #$2700
+0000108E  4E72 2700                 47  code0101    stop    #$2700
+00001092  4E72 2700                 48  code0110    stop    #$2700
+00001096  4E72 2700                 49  code0111    stop    #$2700
+0000109A  4E72 2700                 50  code1000    stop    #$2700
+0000109E  4E72 2700                 51  code1001    stop    #$2700
+000010A2  4E72 2700                 52  code1010    stop    #$2700
+000010A6  4E72 2700                 53  code1011    stop    #$2700
+000010AA  4E72 2700                 54  code1100    stop    #$2700
+000010AE  4E72 2700                 55  code1101    stop    #$2700
+000010B2  4E72 2700                 56  code1110    stop    #$2700
+000010B6  4E72 2700                 57  code1111    stop    #$2700
+000010BA                            58  
+000010BA                            59  
+000010BA                            60      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CODE0000            107A
+CODE0001            107E
+CODE0010            1082
+CODE0011            1086
+CODE0100            108A
+CODE0101            108E
+CODE0110            1092
+CODE0111            1096
+CODE1000            109A
+CODE1001            109E
+CODE1010            10A2
+CODE1011            10A6
+CODE1100            10AA
+CODE1101            10AE
+CODE1110            10B2
+CODE1111            10B6
+EXAMPLE             DE61
+JMP_TABLE           1020
+SHIFT               C
+STACK               A000
+START               1000

@@ -1,0 +1,58 @@
+00000400 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/6/2018 7:23:59 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :Q4
+00000000                             3  * Written by :CSS422
+00000000                             4  * Date       :6 April 2018
+00000000                             5  * Description:Analyzing memory.
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  
+00000000                             8  *-------equates
+00000000  =00004000                  9  addr1   equ $4000
+00000000  =00004001                 10  addr2   equ $4001
+00000000  =0000A7FF                 11  data2   equ $a7ff
+00000000  =00005555                 12  data3   equ $5555
+00000000  =00000000                 13  data4   equ $0000           isn't this unreadable memory?
+00000000  =00001246                 14  data5   equ 4678
+00000000  =0000004F                 15  data6   equ %01001111
+00000000  =00000017                 16  data7   equ %00010111
+00000000                            17  
+00000000                            18  *-------begining
+00000400                            19      org    $400
+00000400  303C A7FF                 20  start   move.w  #data2,d0   load 16 bits of immediate data from data2 into register d0
+00000404  123C 004F                 21          move.b  #data6,d1   load 8 bits of immediate data from data6 into register d1
+00000408  143C 0017                 22          move.b  #data7,d2   load 8 bits of immediate data from data7 into register d2
+0000040C  363C 5555                 23          move.w  #data3,d3   load 16 bits of immediate date from data3 into register d3
+00000410  307C 4000                 24          movea.w #addr1,a0   load 16 bits of immediate data from addr1 into register a0
+00000414                            25          
+00000414                            26          *transfers byte into memory?
+00000414  10C1                      27          move.b  d1,(a0)+    load 8 bits from d1 into ?
+00000416                            28          *transfers another byte into a0?
+00000416  10C2                      29          move.b  d2,(a0)+    load 8 bits from d2 into ?
+00000418                            30          
+00000418  327C 4000                 31          movea.w #addr1,a1   load 16 bits of immediate data from addr1 into register a1
+0000041C                            32          *logical and
+0000041C  C751                      33          and.w   d3,(a1)     does () mean 'value of'?
+0000041E                            34          
+0000041E  4EF8 0400                 35          jmp     start
+00000422                            36          
+00000422                            37          end    $400
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADDR1               4000
+ADDR2               4001
+DATA2               A7FF
+DATA3               5555
+DATA4               0
+DATA5               1246
+DATA6               4F
+DATA7               17
+START               400

@@ -1,0 +1,122 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/2/2018 8:16:04 PM
+
+00000000                             1  *------------------------------------------------------------------------------
+00000000                             2  * Program       :Branching
+00000000                             3  * Written by    :Erik Maldonado
+00000000                             4  * Date          :4 March 2018
+00000000                             5  * Description   :Branching program for experimentation.
+00000000                             6  *------------------------------------------------------------------------------
+00000000                             7  
+00001000                             8  START   ORG     $1000
+00001000                             9  
+00001000                            10  *-------Defined
+00001000  =0000000D                 11  CR      EQU     $0D
+00001000  =0000000A                 12  LF      EQU     $0A
+00001000                            13      
+00001000                            14  *-------Functions
+00001000  43F9 000010C8             15  LOOPMSG LEA     MESSAGE,A1
+00001006  103C 000E                 16          MOVE.B  #14,D0
+0000100A  4E4F                      17          TRAP    #15
+0000100C                            18  
+0000100C  103C 0004                 19  INPUT   MOVE.B  #4,D0
+00001010  4E4F                      20          TRAP    #15
+00001012  B2BC 0015B430             21          CMP.L   #1422384,D1
+00001018  6700 00A8                 22          BEQ     DONE
+0000101C                            23          
+0000101C  B23C 0014                 24          CMP.B   #20,D1
+00001020  6D00 0090                 25          BLT     INVALID
+00001024  B23C 0019                 26          CMP.B   #25,D1
+00001028  6E00 0088                 27          BGT     INVALID
+0000102C                            28          
+0000102C  B23C 0014                 29  F20     CMP.B   #20,D1
+00001030  6600 0010                 30          BNE     F21
+00001034  43F9 000010F8             31          LEA     N20,A1
+0000103A  103C 000E                 32          MOVE.B  #14,D0
+0000103E  4E4F                      33          TRAP    #15
+00001040  60BE                      34          BRA     LOOPMSG
+00001042                            35          
+00001042  B23C 0015                 36  F21     CMP.B   #21,D1
+00001046  6600 0010                 37          BNE     F22
+0000104A  43F9 0000110B             38          LEA     N21,A1
+00001050  103C 000E                 39          MOVE.B  #14,D0
+00001054  4E4F                      40          TRAP    #15
+00001056  60A8                      41          BRA     LOOPMSG
+00001058                            42  
+00001058  B23C 0016                 43  F22     CMP.B   #22,D1
+0000105C  6600 0010                 44          BNE     F23
+00001060  43F9 00001120             45          LEA     N22,A1
+00001066  103C 000E                 46          MOVE.B  #14,D0
+0000106A  4E4F                      47          TRAP    #15
+0000106C  6092                      48          BRA     LOOPMSG
+0000106E                            49  
+0000106E  B23C 0017                 50  F23     CMP.B   #23,D1
+00001072  6600 0012                 51          BNE     F24
+00001076  43F9 00001129             52          LEA     N23,A1
+0000107C  103C 000E                 53          MOVE.B  #14,D0
+00001080  4E4F                      54          TRAP    #15
+00001082  6000 FF7C                 55          BRA     LOOPMSG
+00001086                            56          
+00001086  B23C 0018                 57  F24     CMP.B   #24,D1
+0000108A  6600 0012                 58          BNE     F25
+0000108E  43F9 00001137             59          LEA     N24,A1
+00001094  103C 000E                 60          MOVE.B  #14,D0
+00001098  4E4F                      61          TRAP    #15
+0000109A  6000 FF64                 62          BRA     LOOPMSG
+0000109E                            63          
+0000109E  B23C 0019                 64  F25     CMP.B   #25,D1
+000010A2  43F9 0000113F             65          LEA     N25,A1
+000010A8  103C 000E                 66          MOVE.B  #14,D0
+000010AC  4E4F                      67          TRAP    #15
+000010AE  6000 FF50                 68          BRA     LOOPMSG
+000010B2                            69          
+000010B2  43F9 000010E8             70  INVALID LEA     OOB,A1
+000010B8  103C 000E                 71          MOVE.B  #14,D0
+000010BC  4E4F                      72          TRAP    #15
+000010BE  6000 FF40                 73          BRA     LOOPMSG
+000010C2                            74  
+000010C2  103C 0009                 75  DONE    MOVE.B  #9,D0
+000010C6  4E4F                      76          TRAP    #15
+000010C8                            77  
+000010C8                            78      
+000010C8                            79  *-------Messages
+000010C8= 45 6E 74 65 72 20 ...     80  MESSAGE DC.B    'Enter a number 20 <= x <= 25',CR,LF,'>',0
+000010E8= 4F 75 74 20 6F 66 ...     81  OOB     DC.B    'Out of bounds',CR,LF,0
+000010F8= 54 77 65 6E 74 79 ...     82  N20     DC.B    'Twenty inch rims',CR,LF,0
+0000110B= 4C 65 67 61 6C 20 ...     83  N21     DC.B    'Legal drinking age',CR,LF,0
+00001120= 4D 79 20 61 67 65 ...     84  N22     DC.B    'My age',CR,LF,0
+00001129= 46 61 6D 6F 75 73 ...     85  N23     DC.B    'Famous shoe',CR,LF,0
+00001137= 4B 4F 42 45 21 0D ...     86  N24     DC.B    'KOBE!',CR,LF,0
+0000113F= 21 3F 45 48 2D 0D ...     87  N25     DC.B    '!?EH-',CR,LF,0
+00001147                            88  
+00001147                            89          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CR                  D
+DONE                10C2
+F20                 102C
+F21                 1042
+F22                 1058
+F23                 106E
+F24                 1086
+F25                 109E
+INPUT               100C
+INVALID             10B2
+LF                  A
+LOOPMSG             1000
+MESSAGE             10C8
+N20                 10F8
+N21                 110B
+N22                 1120
+N23                 1129
+N24                 1137
+N25                 113F
+OOB                 10E8
+START               1000

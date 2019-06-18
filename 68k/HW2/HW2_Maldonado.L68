@@ -1,0 +1,134 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/21/2018 5:10:43 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :Homework 2
+00000000                             3  * Written by :Erik Maldonado
+00000000                             4  * Date       :4/20/18
+00000000                             5  * Description:Program does what the professor asked.
+00000000                             6  *-----------------------------------------------------------
+00001000                             7              org     $1000           ;program starts at $1000
+00001000                             8  
+00001000  =0000000D                  9  cr          equ     $0d
+00001000  =0000000A                 10  lf          equ     $0a
+00001000                            11  
+00001000                            12  start:                      
+00001000                            13  *-----------setup
+00001000                            14  *test        lea     Prompt,a1
+00001000                            15  *            move.b  #14,d0
+00001000                            16  *            trap    #15
+00001000                            17  *            
+00001000                            18  *            move.b  #4,d0
+00001000                            19  *            trap    #15
+00001000                            20  *            move.l  d1,d4
+00001000                            21              
+00001000                            22              
+00001000  207C 0000A000             23              movea.l #$a000,a0       ;move LONG address $0000 a000 into register a0
+00001006  30BC BEEF                 24              move.w  #$beef,(a0)     ;move WORD data $#beef into the memory location 
+0000100A                            25                                      ;a0 is storing register                               
+0000100A  227C 00006000             26              movea.l #$6000,a1       ;move LONG address $0000 6000 into register a1
+00001010  247C 00008000             27              movea.l #$8000,a2       ;move LONG address $0000 8000 into register a2
+00001016  4EB9 00001028             28              jsr     sub_read
+0000101C  4EB9 00001048             29              jsr     sub_add
+00001022  4EF9 0000107C             30              jmp     print
+00001028                            31          
+00001028                            32  sub_read:   *read 6000-8000 
+00001028  B5C9                      33  loop_read   cmpa.l  a1,a2          ;compare LONG data in register a1 to register a2
+0000102A  670E                      34              beq.s   exit_read1          ;branch to e_read1 if equal
+0000102C  1019                      35              move.b  (a1)+,d0       ;move BYTE data into register d0 and increment
+0000102E                            36  *-----------compare bytes               ;register a1 by 1 byte
+0000102E  B010                      37              cmp.b   (a0),d0        ;compare BYTE data in at memory location stored
+00001030                            38  *-----------if not equal                ;in register a0 to register d0
+00001030  66F6                      39              bne.s   loop_read      ;branch back to r_read if not equal to repeat the
+00001032                            40  *-----------if equals                   ;process
+00001032  23C9 000010D6             41              move.l  a1,Addr1       ;move LONG data from register a1 into Addr1
+00001038  600C                      42              bra.s   exit_read2          ;short branch to e_read2
+0000103A  227C 00006000             43  exit_read1  movea.l #$6000,a1      ;move LONG address $0000 6000 into a1
+00001040  23C9 000010D6             44              move.l  a1,Addr1       ;move LONG data fom a1 into Addr1
+00001046  4E75                      45  exit_read2  rts
+00001048                            46  
+00001048                            47  sub_add:    *add 256 bytes to d1
+00001048  4240                      48              clr     d0              
+0000104A  4241                      49              clr     d1
+0000104C  4242                      50              clr     d2
+0000104E  4279 000010DC             51              clr     CarryBit
+00001054                            52              for d0 = #1 to #256 do.s    ;loop 256 times
+0000105A  1419                      53                  move.b  (a1)+,d2    ;move BYTE data into d2
+0000105C  D242                      54                  add.w   d2,d1       ;add WORD data into d1 and increment a1
+0000105E  6500 0012                 55                  bcs     add_bit     ;branch if the c flag is set
+00001062                            56              endf
+0000106A  33C1 000010DA             57              move.w  d1,Addsum
+00001070  4E75                      58  exit_add    rts
+00001072                            59              
+00001072  13FC 0001 000010DC        60  add_bit     move.b  #1,CarryBit     ;add BYTE data to CarryBit
+0000107A  60F4                      61              bra.s   exit_add        ;branch to lab_back1
+0000107C                            62      
+0000107C  43F9 000010FE             63  print       lea     Addr_msg,a1
+00001082  103C 000E                 64              move.b  #14,d0
+00001086  4E4F                      65              trap    #15
+00001088                            66  
+00001088  4241                      67              clr     d1
+0000108A  2239 000010D6             68              move.l  Addr1,d1        ;
+00001090  143C 0010                 69              move.b  #16,d2
+00001094  103C 000F                 70              move.b  #15,d0
+00001098  4E4F                      71              trap    #15            
+0000109A                            72  
+0000109A  43F9 0000110C             73              lea     Adds_msg,a1
+000010A0  103C 000E                 74              move.b  #14,d0
+000010A4  4E4F                      75              trap    #15
+000010A6                            76  
+000010A6  4241                      77              clr     d1
+000010A8  3239 000010DA             78              move.w  Addsum,d1
+000010AE  143C 0010                 79              move.b  #16,d2
+000010B2  103C 000F                 80              move.b  #15,d0
+000010B6  4E4F                      81              trap    #15
+000010B8                            82              
+000010B8  43F9 0000111B             83              lea     Bits_msg,a1
+000010BE  103C 000E                 84              move.b  #14,d0
+000010C2  4E4F                      85              trap    #15
+000010C4                            86              
+000010C4  4241                      87              clr     d1
+000010C6  1239 000010DC             88              move.b  CarryBit,d1
+000010CC  143C 0010                 89              move.b  #16,d2
+000010D0  103C 000F                 90              move.b  #15,d0
+000010D4  4E4F                      91              trap    #15
+000010D6                            92             
+000010D6                            93  Addr1       ds.l    1
+000010DA                            94  Addsum      ds.w    1
+000010DC                            95  CarryBit    ds.b    1
+000010DD                            96  
+000010DD= 45 6E 74 65 72 20 ...     97  Prompt      dc.b    'Enter a number of bytes to add :',0
+000010FE= 4164 6472 6573 7...       98  Addr_msg    dc.w    'Address    :',0
+0000110C= 0D 0A 41 64 64 20 ...     99  Adds_msg    dc.b    cr,lf,'Add sum    :',0
+0000111B= 0D 0A 43 61 72 72 ...    100  Bits_msg    dc.b    cr,lf,'Carry      :',0
+0000112A                           101  
+0000112A                           102              end start
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADDR1               10D6
+ADDR_MSG            10FE
+ADDSUM              10DA
+ADDS_MSG            110C
+ADD_BIT             1072
+BITS_MSG            111B
+CARRYBIT            10DC
+CR                  D
+EXIT_ADD            1070
+EXIT_READ1          103A
+EXIT_READ2          1046
+LF                  A
+LOOP_READ           1028
+PRINT               107C
+PROMPT              10DD
+START               1000
+SUB_ADD             1048
+SUB_READ            1028
+_20000000           105A
+_20000001           1064

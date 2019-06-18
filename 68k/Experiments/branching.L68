@@ -1,0 +1,152 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/2/2018 6:56:14 PM
+
+00000000                             1  *------------------------------------------------------------------------------
+00000000                             2  * Program       :Branching
+00000000                             3  * Written by    :Erik Maldonado
+00000000                             4  * Date          :4 March 2018
+00000000                             5  * Description   :Branching program for experimentation.
+00000000                             6  *------------------------------------------------------------------------------
+00000000                             7  
+00001000                             8  START   ORG     $1000
+00001000                             9  
+00001000                            10  *-------Output
+00001000  43F9 00001110             11  LOOP    LEA     MESSAGE,A1
+00001006  103C 000E                 12          MOVE.B  #14,D0
+0000100A  4E4F                      13          TRAP    #15
+0000100C                            14  
+0000100C                            15  *-------Input
+0000100C  103C 0004                 16          MOVE.B  #4,D0           Trap task 4 reads a number from the keyboard 
+00001010  4E4F                      17          TRAP    #15             into  D1.L
+00001012  B2BC 00000000             18          CMP.L   #0,D1           Compares D1 to the number 0
+00001018  6700 00F0                 19          BEQ     DONE            Branch to DONE if equal
+0000101C                            20          
+0000101C  B23C 0000                 21          CMP.B   #0,D1           Compares D1 to 0
+00001020  6D00 00D8                 22          BLT     INVALID         BLT branches if D1 is less than 0
+00001024  B23C 0009                 23          CMP.B   #9,D1           Compares D1 to 1
+00001028  6E00 00D0                 24          BGT     INVALID         BGT branches if D1 is greater than 9
+0000102C                            25          
+0000102C                            26  *       BRA     LOOP            Branch to LOOP
+0000102C                            27  
+0000102C                            28  *-------Compute input
+0000102C                            29  
+0000102C  B23C 0001                 30          CMP.B   #1,D1           Compares D1 and 1
+00001030  6600 0010                 31          BNE     TWO             BEQ branches if D1 and 1 are not equal
+00001034  43F9 00001160             32          LEA     MER,A1      
+0000103A  103C 000E                 33          MOVE.B  #14,D0
+0000103E  4E4F                      34          TRAP    #15
+00001040  60BE                      35          BRA     LOOP
+00001042                            36  
+00001042  B23C 0002                 37  TWO     CMP.B   #2,D1           Compares D1 and 1
+00001046  6600 0010                 38          BNE     THREE           BEQ branches if D1 and 2 are not equal
+0000104A  43F9 00001170             39          LEA     VEN,A1      
+00001050  103C 000E                 40          MOVE.B  #14,D0
+00001054  4E4F                      41          TRAP    #15
+00001056  60A8                      42          BRA     LOOP
+00001058                            43          
+00001058  B23C 0003                 44  THREE   CMP.B   #3,D1
+0000105C  6600 0010                 45          BNE     FOUR
+00001060  43F9 0000117E             46          LEA     EAR,A1
+00001066  103C 000E                 47          MOVE.B  #14,D0
+0000106A  4E4F                      48          TRAP    #15
+0000106C  6092                      49          BRA     LOOP
+0000106E                            50  
+0000106E  B23C 0004                 51  FOUR    CMP.B   #4,D1
+00001072  6600 0012                 52          BNE     FIVE
+00001076  43F9 0000118C             53          LEA     MAR,A1
+0000107C  103C 000E                 54          MOVE.B  #14,D0
+00001080  4E4F                      55          TRAP    #15
+00001082  6000 FF7C                 56          BRA     LOOP
+00001086                            57          
+00001086  B23C 0005                 58  FIVE    CMP.B   #5,D1
+0000108A  6600 0012                 59          BNE     SIX
+0000108E  43F9 00001199             60          LEA     JUP,A1
+00001094  103C 000E                 61          MOVE.B  #14,D0
+00001098  4E4F                      62          TRAP    #15
+0000109A  6000 FF64                 63          BRA     LOOP
+0000109E                            64          
+0000109E  B23C 0006                 65  SIX     CMP.B   #6,D1
+000010A2  6600 0012                 66          BNE     SEVEN
+000010A6  43F9 000011A9             67          LEA     SAT,A1
+000010AC  103C 000E                 68          MOVE.B  #14,D0
+000010B0  4E4F                      69          TRAP    #15
+000010B2  6000 FF4C                 70          BRA     LOOP
+000010B6                            71  
+000010B6  B23C 0007                 72  SEVEN   CMP.B   #7,D1
+000010BA  6600 0012                 73          BNE     EIGHT
+000010BE  43F9 000011B8             74          LEA     URA,A1
+000010C4  103C 000E                 75          MOVE.B  #14,D0
+000010C8  4E4F                      76          TRAP    #15
+000010CA  6000 FF34                 77          BRA     LOOP
+000010CE                            78          
+000010CE  B23C 0008                 79  EIGHT   CMP.B   #8,D1
+000010D2  6600 0012                 80          BNE     NINE
+000010D6  43F9 000011C7             81          LEA     NEP,A1
+000010DC  103C 000E                 82          MOVE.B  #14,D0
+000010E0  4E4F                      83          TRAP    #15
+000010E2  6000 FF1C                 84          BRA     LOOP
+000010E6                            85          
+000010E6  B23C 0009                 86  NINE    CMP.B   #9,D1
+000010EA  43F9 000011D7             87          LEA     PLU,A1
+000010F0  103C 000E                 88          MOVE.B  #14,D0
+000010F4  4E4F                      89          TRAP    #15
+000010F6  6000 FF08                 90          BRA     LOOP
+000010FA                            91          
+000010FA  43F9 00001142             92  INVALID LEA     INV,A1          ~Load effective address of INV into register A1
+00001100  103C 000E                 93          MOVE.B  #14,D0          ~Move input(#14) into register D0
+00001104  4E4F                      94          TRAP    #15             ~Execute data in previous line
+00001106  6000 FEF8                 95          BRA     LOOP
+0000110A                            96      
+0000110A  103C 0009                 97  DONE    MOVE.B  #9,D0           Do not understand what this does
+0000110E  4E4F                      98          TRAP    #15             
+00001110                            99  
+00001110  =0000000D                100  CR      EQU     $0D
+00001110  =0000000A                101  LF      EQU     $0A
+00001110                           102          
+00001110= 45 6E 74 65 72 20 ...    103  MESSAGE DC.B    'Enter a number between 0 and 9, Enter 0 to exit: ',0
+00001142= 54 68 61 74 20 69 ...    104  INV     DC.B    'That is not between 1 and 9',CR,LF,0
+00001160= 48 65 6C 6C 6F 20 ...    105  MER     DC.B    'Hello Mercury',CR,LF,0
+00001170= 48 65 6C 6C 6F 20 ...    106  VEN     DC.B    'Hello Venus',CR,LF,0
+0000117E= 48 65 6C 6C 6F 20 ...    107  EAR     DC.B    'Hello Earth',CR,LF,0
+0000118C= 48 65 6C 6C 6F 20 ...    108  MAR     DC.B    'Hello Mars',CR,LF,0
+00001199= 48 65 6C 6C 6F 20 ...    109  JUP     DC.B    'Hello Jupiter',CR,LF,0
+000011A9= 48 65 6C 6C 6F 20 ...    110  SAT     DC.B    'Hello Saturn',CR,LF,0
+000011B8= 48 65 6C 6C 6F 20 ...    111  URA     DC.B    'Hello Uranus',CR,LF,0
+000011C7= 48 65 6C 6C 6F 20 ...    112  NEP     DC.B    'Hello Neptune',CR,LF,0
+000011D7= 50 6C 75 74 6F 20 ...    113  PLU     DC.B    'Pluto is not a plannet',CR,LF,0
+000011F0                           114  
+000011F0                           115          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CR                  D
+DONE                110A
+EAR                 117E
+EIGHT               10CE
+FIVE                1086
+FOUR                106E
+INV                 1142
+INVALID             10FA
+JUP                 1199
+LF                  A
+LOOP                1000
+MAR                 118C
+MER                 1160
+MESSAGE             1110
+NEP                 11C7
+NINE                10E6
+PLU                 11D7
+SAT                 11A9
+SEVEN               10B6
+SIX                 109E
+START               1000
+THREE               1058
+TWO                 1042
+URA                 11B8
+VEN                 1170

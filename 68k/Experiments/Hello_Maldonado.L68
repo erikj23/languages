@@ -1,0 +1,44 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/2/2018 4:58:19 PM
+
+00000000                             1  *------------------------------------------------------------------------------
+00000000                             2  * Program       :Hello World
+00000000                             3  * Written by    :Erik Maldonado
+00000000                             4  * Date          :4 March 2018
+00000000                             5  * Description   :Hello world program.
+00000000                             6  *------------------------------------------------------------------------------
+00001000                             7  START   ORG     $1000                   START AT THIS ADRESS
+00001000                             8      
+00001000                             9  *-------CODE FOR OUTPUT--------
+00001000  43F9 00001012             10          LEA     MESSAGE,A1              LOADS MESSAGE INTO ADDRESS REGISTER A1 
+00001006  103C 000E                 11          MOVE.B  #14,D0                  MOVES THE NUMBER 14 INTO DATA REGISTER 
+0000100A  4E4F                      12          TRAP    #15                     D0 DISPLAYS MESSAGE
+0000100C                            13  
+0000100C  103C 0009                 14          MOVE.B  #9,D0
+00001010  4E4F                      15          TRAP    #15                     HALT SIMULATOR
+00001012                            16  
+00001012  =0000000D                 17  CR      EQU     $0D                     ASCII CODE FOR CARRIAGE RETURN
+00001012  =0000000A                 18  LF      EQU     $0A                     ASCII CODE FOR LINE FEED
+00001012                            19  
+00001012= 48 65 6C 6C 6F 2C ...     20  MESSAGE DC.B    'Hello, My '            PLACE ASCII STRING IN MEMORY AT MESSAGE
+0000101C= 4E 61 6D 65 20 69 ...     21          DC.B    'Name is Erik Maldonado',CR,LF,CR,LF
+00001036= 54 68 69 73 20 70 ...     22          DC.B    'This program took me a little longer than an hour.',CR,LF,CR,LF
+0000106C= 54 68 65 20 72 65 ...     23          DC.B    'The readings are difficult to keep up with, there is a '
+000010A3= 6C 6F 74 20 6F 66 ...     24          DC.B    'lot of reading to do.',CR,LF
+000010BA= 49 20 63 61 6E 20 ...     25          DC.B    'I can do it if I work hard.',CR,LF,CR,LF
+000010D9= 54 68 61 6E 6B 20 ...     26          DC.B    'Thank you for listening',0
+000010F1                            27          
+000010F1                            28          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CR                  D
+LF                  A
+MESSAGE             1012
+START               1000

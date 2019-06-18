@@ -1,0 +1,55 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/20/2018 6:23:44 PM
+
+00000000                             1  
+00001000                             2              ORG         $1000
+00001000                             3  START:          
+00001000  33C3 000A0000              4              move.w      d3,$0000a0000           ;move WORD data from d3 into LONG address
+00001006                             5                                                      ;$0000a000
+00001006  1438 42B7                  6              move.b      $42b7,d2                ;move BYTE data from WORD address into d2
+0000100A  1438 7000                  7              move.b      $7000,d2                ;test
+0000100E  3E78 7000                  8              movea.w     $7000,a7                ;move WORD address $7000 into a7
+00001012  D047                       9              add.w       d7,d0                   ;add WORD data from d7 to d0 and store in d0
+00001014  9401                      10              sub.b       d1,d2                   ;subtract BYTE data in d1 from d2
+00001016                            11              
+00001016                            12              *move.b     $a000,a3
+00001016                            13              *add.b      #$1000,d2
+00001016                            14              *movea.w    $1234,d0
+00001016                            15              *andi.b     #23,#$100
+00001016                            16              *subi.b     d3,%1000
+00001016  6000 000C                 17              bra.w         lab_q3
+0000101A                            18  
+0000101A                            19      *-------setup for q3
+0000101A                            20  sub_setup1:
+0000101A  203C C198F382             21              move.l      #$c198f382,d0
+00001020  7201                      22              move.l      #$00000001,d1
+00001022  4E75                      23              rts
+00001024                            24              
+00001024  4EB8 101A                 25  lab_q3      jsr         sub_setup1            
+00001028  E700                      26              asl.b       #3,d0
+0000102A                            27              
+0000102A  4EB8 101A                 28              jsr         sub_setup1
+0000102E  E980                      29              asl.l       #4,d0
+00001030                            30              
+00001030  4EB8 101A                 31              jsr         sub_setup1
+00001034  EE08                      32              lsr.b       #7,d0
+00001036                            33              
+00001036  4EB8 101A                 34              jsr         sub_setup1
+0000103A  E558                      35              rol.w       #2,d0
+0000103C                            36              
+0000103C  4EB8 101A                 37              jsr         sub_setup1
+00001040  EE98                      38              ror.l       #7,d0
+00001042                            39      
+00001042                            40              END         START        
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+LAB_Q3              1024
+START               1000
+SUB_SETUP1          101A

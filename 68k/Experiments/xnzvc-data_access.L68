@@ -1,0 +1,65 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 4/11/2018 7:52:39 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  * Put program code here
+00001000                            11  *---problem1
+00001000  203C 025C30F7             12      move.l  #$025c30f7,d0
+00001006  103C 0090                 13      move.b  #$90,d0
+0000100A  103C 00F7                 14      move.b  #$f7,d0
+0000100E  303C 0090                 15      move.w  #$90,d0
+00001012                            16      
+00001012                            17  *---reset
+00001012                            18  *---problem2
+00001012  303C 30F7                 19      move.w  #$30f7,d0
+00001016  7012                      20      moveq   #$12,d0
+00001018  7082                      21      moveq   #$82,d0
+0000101A                            22      
+0000101A                            23  *---reset
+0000101A                            24  *---problem3
+0000101A  31FC 2012 1234            25      move.w  #$2012,$1234
+00001020  1238 1235                 26      move.b  $1235,d1
+00001024                            27  *---error
+00001024                            28  *---move.w  $1235,d1
+00001024                            29  
+00001024                            30  *---reset
+00001024                            31  *---problem4
+00001024  31FC AB10 1234            32      move.w  #$ab10,$1234
+0000102A  203C 025C30F7             33      move.l  #$025c30f7,d0
+00001030  227C 12345678             34      movea.l #$12345678,a1
+00001036                            35      
+00001036  327C 1234                 36      movea.w #$1234,a1
+0000103A  3011                      37      move.w  (a1),d0
+0000103C                            38      
+0000103C  3278 1234                 39      movea.w $1234,a1
+00001040  3011                      40      move.w  (a1),d0
+00001042                            41  
+00001042  327C 1235                 42      movea.w #$1235,a1
+00001046                            43  *---error
+00001046                            44  *---move.w (a1),d0
+00001046                            45      
+00001046                            46  *---error
+00001046  3278 1235                 47      movea.w $1235,a1
+0000104A  3011                      48      move.w  (a1),d0
+0000104C                            49  
+0000104C                            50  * Put variables and constants here
+0000104C                            51  
+0000104C                            52      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000
